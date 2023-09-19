@@ -1,1 +1,4 @@
-# python_projects
+# Collection of Python Projects
+
+## Calculator GUI interface
+## Password Manager (no GUI)
