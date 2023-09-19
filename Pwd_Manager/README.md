@@ -1,6 +1,6 @@
 # Password Manager
 ### Video Demo:  <URL HERE>
-### Description: {asswprd ,amaher a;;pwomg tp add and store credentials} that are saved into a file. The passwords are encrypted.
+### Description: Password Manager allows to add and store credentials} that are saved into a file. The passwords are encrypted.
 
 This program is a password manager that allows the user to add or view passwords saved in a txt file "pfile.txt". The data is stored as strings separated by |,
 Domain|User|Password
@@ -19,11 +19,17 @@ If the master password is entered correctly, the program prints a table with col
 
 ## Defined functions
 There are a total of 6 funcitons beyond the main function
+
 add() - adds one set of credentials to the password file
+
 view() - allows the user to retrieve the stored information
+
 write_key() - generate a new key and stores it in 'key.ley 
+
 load_key - reads the key bfrom 'key.key'
+
 pwd_encoder - generates a new master passwoed and saevsit in 'pwd.key' after encoding it
+
 pwd_check - check that the user input matches the master password saved in 'pwd.key'
 
 ## Requirements
