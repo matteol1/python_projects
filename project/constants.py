@@ -2,9 +2,13 @@ import numpy as np
 import pandas as pd
 
 TEST_FILE = 'test.txt'
+IMAGE_FILE = 'plot.png'
 
+PROGRAM_DESCRIPTION = "The program takes as input a text file, via a mandatory command line argument and outputs a bar plot of the 'RANGE' most common words."
 RANGE = 50
 COMMENT_SYMBOL = '%'
 
-TEST_DICT = {"Word": ['I', "am", "Tom", "Marvolo", "Riddle"], "Count": [1, 2, 3, 4, 10]}
-TEST_DATA = pd.DataFrame(TEST_DICT)
+TEST_DICT = {'I':1 , "am":2, "Tom":3, "Marvolo":5, "Riddle":10}
+
+PUNCTUATION = (" ",",", ".","?","!",'\n','\t',':')
+

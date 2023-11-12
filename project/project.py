@@ -1,16 +1,8 @@
-import os.path
-import sys
+import argparse
 import tabulate
-import csv
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import tkinter as tk
-import argparse
-#from icecream import ic
-import pprint
-from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg)
-
 
 
 from constants import *
@@ -49,13 +41,16 @@ def word_cleaner(word):
     return clean_word.lower()
 
 def dict_to_data(dictionary):
-
     data = pd.DataFrame({"Word": dictionary.keys(), "Count":dictionary.values()})
     #sort and extract RANGE most common words
     data = data.sort_values("Count", ascending=False)
     return data.iloc[0:RANGE]
 
-def create_plot(data=TEST_DATA):
+def print_table(common_words):
+    table = zip(common_words["Word"], common_words["Count"])
+    print(tabulate.tabulate(table, tablefmt="grid"))
+
+def create_plot(data):
     x = data["Word"]
     y = data["Count"]
 
@@ -63,26 +58,15 @@ def create_plot(data=TEST_DATA):
     axes.barh(x,y)
     #axes.title("Most commmon 50 words")
     #plt.show()
+    axes.set_title(f"Count of the most common {RANGE} words")
     axes.set_xlabel("Most common words")
     axes.set_ylabel("Count")
 
     return fig, axes
 
-#def plot_on_screen(fig):
-#    root = tk.Tk()
-#    root.geometry("600x600")
-#    img1 = tk.Image('plot.png')
-#    quit_button = tk.Button(text="Quit", command=root.destroy)
-#
-#    img1.pack(side=tk.TOP)
-#    quit_button.pack(side=tk.BOTTOM)
-#
-#    root.mainloop()
-
-
 def main():
          
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description=PROGRAM_DESCRIPTION)
     parser.add_argument('file', type=str, help="File name (text file)")
     #optional args
     parser.add_argument('--verbose', action="store_true", help="Verbose mode")
@@ -99,14 +83,15 @@ def main():
         common_words = dict_to_data(words)
         print("Dictionary created successfully")
 
+        view_on_screen = input("Show results (y/n)? ")
+        if view_on_screen in ['y','Y','yes','Yes","YES']:
+                print_table(common_words)
         fig, axes = create_plot(common_words)
-        fig.savefig(IMAGE_FILE)
-        print(f"File {IMAGE_FILE} saved successfully")
-
-        #showplot = input("Show plot on screen (y/n)? ")
-        #if showplot in ['y','Y','yes','Yes","YES']:
-        #    plot_on_screen(fig)
-
+        saveplot = input("Save plot to file (y/n)? ")
+        if saveplot in ['y','Y','yes','Yes","YES']:
+            fig.savefig(IMAGE_FILE)
+            print(f"File {IMAGE_FILE} saved successfully")
+    f.close()
 
 if __name__ == "__main__": 
     main()
