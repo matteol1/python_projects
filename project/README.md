@@ -1,52 +1,64 @@
 CS50P Final Project
 # File reader, word count
 
-The program reads a text tile and reads words saving them in a dictionary, keeping track of their frequency.
+The program takes as input a text file, via a mandatory command line argument and outputs a bar plot of the 'RANGE' most common words.\
 
-There are several functions implemented.
-The first two are dedicated to reading the file
-#### check_file
-checks that the file exists and is opened correctly
-#### read_file
-runs over the file and reads lines.
-Following each line is separated into a list of words.
-To save memory, only a termporary list for each line is saved at any given time.
-Within a loop, each word is cleaned with
-#### word_cleaner()
-this removes punctuation, abd sets each word to lower case.
-In prder to use this with coding or markup text, such as LaTeX, additional cleaning is performed. Every line that starts with a backslash or a COMMNET_SYMBOL is skipped.
-For example,this applied to LaTeX, removes every line that is a command, e.g. '\command' and every line that is intended to be a comment: %comment line.
+This is achieved by a sequence of operations defined in specific function.
+The main functionality of the program is encoded in the main project.py file.
+There is a test file 'test_project.py', as well as a sample test file 'test.txt' to run the tests.
+Additionally, the file 'constants.py' contains, parameters such as default file names and the range of words to keep from the dataset.\
 
-Once we have done all this, we have a dictionary of words with their respective count,
-Dictionary:
-word1: 10
-word2: 15
-word3: 20
+The main steps in the program are:\
 
-Next, the function 
-#### dict_to_data()
-takes the dictionary as input and converts it into a pandas DataFrame
+**Read the file**\
+performed by the functions:\
+*check_file()* and *read_file()*\
+The first is only responsible to opening the file. The second function reads the lines in the file, separates them into individual words and saves them in a dictionary, composed of key-value pairs, where the keys are the different words and the coresponding values count the appearance of that given word in the text.\
 
-The function eventually sorts the data and only keeps the first RANGE elements.
+**Cleaning the input**\
+While reading the file, the function *word_cleaner()* is called. This has the purpose of removing spaces, punctuation and other spurious characters from each word. It returns a lowercase stripped down version of each word.
+The list of punctuation marks to be removed is defined in the global variable PUNCTUATION in the 'constant.py' file.\
 
-Finally, we have the function
-#### create_plot()
-which creates a bar plot with the shortened data.
+Examples of word clieaning is:\
+word_cleaner("Hello,") = "hello"\
+word_cleaner("world!") = "world"\
 
-Next to implements:
-before chopping the data we can run some statistics on the entire data set.
-We could also remove from the most common set of words, articles, prepositions, etc. that don't furnish actual content of the file that we have read.
+At this stage we have a dictionary of the form\
+{word1: 10\
+word2: 15\
+word3: 20\}\
+
+**Preparing the data**
+The dictionary is then passed to the *dict_to_data()* function to be converted into a pandas DaaFrame.\
+Here, the dataset is sorted in descending order and then the top 'RANGE' values are kept and returned as a stripped down DataFrame.\
+
+**Plotting the data**
+Once we have the set of data we want to observe, the data is processed by the *create_plot()* function.\
+This defines a matplotlib figure and creates a horizontal bar plot of the data.
+<img src="sample_plot.png" alt="Sample Plot" style="height: width:300px;"/>
+The plot is saved as the 'plot.png' file in the working directoy.
+The filename is defined in the 'constants.py' configuration file.
+
+## Yo implement
+- refine the word_cleaner function to make it work nicely with code, scripts, etc..\
+For instance, we can run the script on a LaTeX file. In thjis case, we would want to remove all lines starting with a backslash or a comment character.
+
+- before restricting the data to the most common RANGE words, we can run some statiscs on the entire data set.\
+- We could also easily extend this to a collection of m,ultiple text files.\
+- A useful additinoal step would be to remove articles, prepositions, pronouns or, more in general, the top X most common words in English, to reduce to the set of words that are most significant for the file we are working on.\
 
 
-## List of functions
-check_file
-read_file
-word_cleaner
-duct_to_data
-create_plot
-plot_on_screen
+### List of functions
+check_file\
+read_file\
+word_cleaner\
+duct_to_data\
+create_plot\
 
-## Requirements
-argoarse
-numpy
+### Requirements
+Also listed in the 'requirements.txt' file:\
+argoarse\
+numpy\
 pandas
+matplotlib
+

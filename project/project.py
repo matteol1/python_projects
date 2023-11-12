@@ -29,7 +29,6 @@ def read_file(file=open(TEST_FILE, "r")):
         tmp_list = line.split(" ")
         if i%50==0:
             print(f"Reading line {i}")
-            print(tmp_list)
         for word in tmp_list:
             clean_word = word_cleaner(word)
             if clean_word:
@@ -42,7 +41,9 @@ def read_file(file=open(TEST_FILE, "r")):
 def word_cleaner(word):
     if word.startswith("\\"):
         return None
-    clean_word = word.strip(" ").strip(",").strip(".").strip("?").strip("!").strip('\n').strip('\t')
+    clean_word = word
+    for char in PUNCTUATION:
+        clean_word = clean_word.strip(char)
     if clean_word == '' or clean_word == '-' or clean_word == '+' or clean_word == '=':
         return None
     return clean_word.lower()
@@ -51,13 +52,8 @@ def dict_to_data(dictionary):
 
     data = pd.DataFrame({"Word": dictionary.keys(), "Count":dictionary.values()})
     #sort and extract RANGE most common words
-    #check max, min etc.
     data = data.sort_values("Count", ascending=False)
-    #range = int(input(f"Select range (default {RANGE}): "))
-    #if range:
-    #    return data.iloc[0:range]
-    #else:
-    return data.iloc[50:100]
+    return data.iloc[0:RANGE]
 
 def create_plot(data=TEST_DATA):
     x = data["Word"]
@@ -72,21 +68,16 @@ def create_plot(data=TEST_DATA):
 
     return fig, axes
 
-def plot_on_screen(fig):
-    root = tk.Tk()
-    root.geometry("600x600")
-    canvas = tk.Canvas()
-    canvas = FigureCanvasTkAgg(fig, master=root)
-    canvas.draw()
-
-    quit_button = tk.Button(text="Quit", command=root.destroy)
-
-    quit_button.pack(side=tk.BOTTOM)
-    canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
-
-    root.mainloop()
-
-
+#def plot_on_screen(fig):
+#    root = tk.Tk()
+#    root.geometry("600x600")
+#    img1 = tk.Image('plot.png')
+#    quit_button = tk.Button(text="Quit", command=root.destroy)
+#
+#    img1.pack(side=tk.TOP)
+#    quit_button.pack(side=tk.BOTTOM)
+#
+#    root.mainloop()
 
 
 def main():
@@ -100,7 +91,6 @@ def main():
 
     filename = parse_args.file
 
-
     f = check_file(filename)
     if f:
         print(f"File {filename} opened successfully. Reading...")
@@ -110,11 +100,12 @@ def main():
         print("Dictionary created successfully")
 
         fig, axes = create_plot(common_words)
-        fig.savefig('plot.png')
+        fig.savefig(IMAGE_FILE)
+        print(f"File {IMAGE_FILE} saved successfully")
 
-        showplot = input("Show plot on screen (y/n)? ")
-        if showplot in ['y','Y','yes','Yes","YES']:
-            plot_on_screen(fig)
+        #showplot = input("Show plot on screen (y/n)? ")
+        #if showplot in ['y','Y','yes','Yes","YES']:
+        #    plot_on_screen(fig)
 
 
 if __name__ == "__main__": 
