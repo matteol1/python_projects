@@ -10,5 +10,5 @@ COMMENT_SYMBOL = '%'
 
 TEST_DICT = {'I':1 , "am":2, "Tom":3, "Marvolo":5, "Riddle":10}
 
-PUNCTUATION = (" ",",", ".","?","!",'\n','\t',':')
+PUNCTUATION = ('\n','\t',"...",';',':'," ",",", ".","?","!")
 
