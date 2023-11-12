@@ -1,0 +1,892 @@
+\documentclass[11pt,letterpaper,usenames,%twoside,
+dvipsnames]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+%\usepackage{jheppub}
+
+%FONTS AND MATH
+\usepackage{amsmath,amssymb,amsfonts} %loaded by jhep
+%\allowdisplaybreaks[2]  %allow page breaks in multi-line eqns, [1]=as little as poss; ... [4]=most permissive
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\text{\ding{51}}}%check mark
+\newcommand{\xmark}{\text{\ding{55}}}%x mark
+\usepackage{bm} %boldmath
+\usepackage{slashed}       % \slashed{k}
+%\usepackage{mathrsfs}    % Weinberg-esque letters 
+\usepackage{dsfont} %doublestruck math = \mathds
+\usepackage{ytableau}   
+%\usepackage{youngtab}   % Young Tableaux
+\usepackage{float}
+\usepackage{hhline}
+\usepackage{mathtools}
+\usepackage{cancel}
+
+%FIGURES
+%\pdfoutput=1 %if submitting pdflatex (i.e. if pdf, jpg figs)
+\usepackage{graphicx}           %loaded by jhep
+%\graphicspath{{figures/}}	 % set directory for figures
+%figures using tikz package:
+\usepackage{verbatim}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows,calc,snakes,shapes,shapes.arrows,
+decorations.markings,decorations.pathmorphing}
+% \xrsquigarrow{#1} = wavy rt arrow w text #1 over it
+\newcounter{sarrow}
+\newcommand\xrsquigarrow[1]{%
+\stepcounter{sarrow}%
+\begin{tikzpicture}[decoration={snake,amplitude=.7mm},>=angle 90]
+\node (\thesarrow) {\strut#1};
+\draw[->,decorate] (\thesarrow.south west) -- (\thesarrow.south east);
+\end{tikzpicture}%
+}
+     % global tikz presets
+     \tikzset{>=triangle 90}
+     \tikzstyle{gr}=[draw,circle,green!50!black,fill=green!50!black,scale=.6]
+     \tikzstyle{Bl}=[draw,circle,blue,scale=.6]
+     \tikzstyle{R}=[draw,circle,fill=red,scale=.6]
+     \tikzstyle{bl}=[draw,circle,fill=black,scale=.35]
+     \tikzstyle{bbc}=[draw,circle,fill=black,scale=.75]
+     \tikzstyle{bbcs}=[draw,circle,fill=black,scale=.5]
+     \tikzstyle{rc}=[circle,fill=red,scale=.6]
+     \tikzstyle{wc}=[draw,circle,scale=.75]
+     
+     \tikzset{snake it/.style={decorate, decoration=snake}}
+     \tikzstyle{Blf}=[draw,circle,fill=blue,scale=.5]
+
+     
+     
+%ARRAYS AND TABLES
+\usepackage{array} % ??
+\usepackage{multirow} % multiple row elements in a table
+\usepackage{colortbl} % colored rows and columns in tables
+%\usepackage{booktabs} % more control over tables
+%\usepackage{nicefrac} % fractions in tables,
+\usepackage{arydshln} % dashed lines in arrays and tables
+\usepackage{stfloats}  % ??
+\usepackage{cellspace}
+\setlength\cellspacetoplimit{5pt}
+\setlength\cellspacebottomlimit{5pt}
+
+\usepackage{rotating}
+
+%Define lines spacing etc.
+\usepackage{setspace}
+%\doublespacing
+\singlespacing
+%Otherwise, instead of package, can use
+%\linespread{1.5}
+\usepackage{titlesec}
+\titleformat{\chapter}[display]{\normalfont\huge\bfseries\singlespacing}{\chaptertitlename\ \thechapter}{40pt}{\huge}
+\titleformat{\section}{\singlespacing\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\singlespacing\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\singlespacing\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+%COLOR
+%\usepackage{color}  % \color{...}, colored text
+\usepackage{xcolor}   % \color{...}, colored text
+%   put usenames,dvipsnames options in documentclass, 
+%   otherwise conflicts with "url" package
+%\usepackage[usenames,dvipsnames]{xcolor}
+%% colors
+\def\blue#1{{\color{blue}{#1}}}
+\def\green#1{{\color{black!25!green}{#1}}}
+\def\yellow#1{{\color{black!25!yellow}{#1}}}
+\def\red#1{{\color{red}{#1}}}
+\def\grey#1{{\color{black!40}{#1}}}
+\def\ccb{\cellcolor{blue!07}}
+\def\ccg{\cellcolor{green!07}}
+\def\ccw{\cellcolor{white}}
+\def\ccy{\cellcolor{yellow!70}}
+\def\ccr{\cellcolor{red!07}}
+\def\rcb{\rowcolor{blue!07}}
+\def\rcg{\rowcolor{green!07}}
+\def\rcy{\rowcolor{black!25!yellow!10}}
+\def\rco{\rowcolor{black!25!orange!10}}
+
+
+
+%MISC
+\usepackage{url} % ??
+%\usepackage{framed} % boxed remarks
+%\usepackage{subcaption} % subfigures; subfig depreciated
+%\usepackage{paralist} % compactitem
+%\usepackage{appendix} % subappendices
+%\usepackage{cite} % grouping citations (incompatible with collref)
+\usepackage{epigraph}
+\usepackage[colorlinks, linkcolor=blue, citecolor=blue]{hyperref}
+
+%EDITING
+\usepackage{showkeys}   %shows refs and cites
+%\usepackage{comment}  %suppress anything between \begin{comment} and \end{comment}
+\newcommand{\mario}[1]{{\tt \color{red} [Mario: {#1}]}}
+\newcommand{\philip}[1]{{\tt \color{red} [Philip: {#1}]}}
+\newcommand{\matteo}[1]{{\tt \color{red} [Matteo: {#1}]}}
+\newcommand{\yongchao}[1]{{\tt \color{red} [Yongchao: {#1}]}}
+
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{afterpage}
+
+%\def\undertext#1{$\underline{\smash{\hbox{#1}}}$}
+%\def\v{\vee}
+%\def\^{\wedge}
+%\def\tr{\mathop{\rm tr}}
+%\def\Im{\mathop{\rm Im}}
+%\def\Re{\mathop{\rm Re}}
+%\def\Aut{\mathop{\rm Aut}}
+%\def\Int{\mathop{\rm Int}}
+%\def\Out{\mathop{\rm Out}}
+%\def\U{\mathop{\rm u}}
+%\def\SU{\mathop{\rm su}}
+%\def\O{\mathop{\rm o}}
+%\def\SO{\mathop{\rm so}}
+%\def\SL{\mathop{\rm SL}}
+%\def\GL{\mathop{\rm GL}} 
+%\def\Sp{\mathop{\rm sp}}
+%\def\USp{\mathop{\rm usp}}\def\Tr{\mathop{\rm Tr}}
+%\def\with{\mathop{\,\textstyle{\rm w/}\,}}
+%\def\yd{\ydiagram}
+
+%MACROS
+%% equations
+\def\nn{\nonumber}
+\def\ph{\phantom}
+\newcommand{\bpm}{\begin{pmatrix}}
+\newcommand{\epm}{\end{pmatrix}}
+\newcommand{\bsm}{\begin{smallmatrix}}
+\newcommand{\esm}{\end{smallmatrix}}
+\newcommand{\bspm}{\left(\begin{smallmatrix}}
+\newcommand{\espm}{\end{smallmatrix}\right)}
+%% symbols, operators
+\def\bar{\overline}
+\def\til{\widetilde}
+\def\hat{\widehat}
+\def\hf{{\hat 4}}
+\def\hpm{{\hat\pm}}
+\def\hp{{\hat+}}
+\def\hm{{\hat-}}
+\def\dag{\dagger}
+\def\v{\vee}
+\def\^{\wedge}
+\def\del{{\partial}}
+\def\delb{{\bar\del}}
+\def\pdv#1#2{\frac{\del{#1}}{\del{#2}}}
+\def\bra#1{{\langle{#1}|}} 
+\def\ket#1{{|{#1}\rangle}} 
+\def\vev#1{{\langle{#1}\rangle}} 
+\def\undertext#1{$\underline{\smash{\hbox{#1}}}$} 
+\def\Tr{{\rm Tr}}
+\def\Im{{\rm Im}}
+\def\Re{{\rm Re}}
+\def\GL{{\rm GL}} 
+\def\gl{\mathfrak{gl}} 
+\def\O{{\rm O}}
+\def\fo{\mathfrak{o}}
+\def\osp{\mathfrak{osp}}
+\def\SO{{\rm SO}}
+\def\so{\mathfrak{so}}
+\def\SL{{\rm SL}}
+\def\sl{\mathfrak{sl}}
+\def\psl{\mathfrak{psl}}
+\def\SU{{\rm SU}}
+\def\su{\mathfrak{su}}
+\def\Sp{{\rm Sp}}
+\def\sp{\mathfrak{sp}}
+\def\USp{{\rm USp}}
+\def\U{{\rm U}}
+\def\u{\mathfrak{u}}
+%% roman
+\def\hA{{\hat A}}
+\def\ha{{\hat a}}
+\def\cA{{\mathcal A}}
+\def\cB{{\mathcal B}}
+\def\fB{{\mathfrak B}}
+\def\fb{{\mathfrak b}}
+\def\C{\mathbb{C}} 
+\def\cD{{\mathcal D}}
+\def\cfD{{\mathscr D}}
+\def\fE{{\mathfrak E}}
+\def\cF{{\mathcal F}}
+\def\cFt{{\til\cF}}
+\def\cG{{\mathcal G}}
+\def\fG{{\mathfrak G}}
+\def\fg{{\mathfrak g}}
+\def\H{\mathbb{H}}
+\def\cH{{\mathcal H}}
+\def\cfH{{\mathscr H}}
+\def\cfI{{\mathscr I}}
+\def\I{\mathbb{I}}
+\def\hi{{\hat i}}
+\def\hj{{\hat j}}
+\def\hk{{\hat k}}
+\def\tj{{\til\jmath}}
+\def\cJ{{\mathcal J}}
+\def\cK{{\mathcal K}}
+\def\cL{{\mathcal L}}
+\def\cfL{{\mathscr L}}
+\def\fL{{\mathfrak L}}
+\def\cM{{\mathcal M}}
+\def\cfM{{\mathscr M}}
+\def\cMt{{\til\cM}}
+\def\fM{{\mathfrak M}}
+\def\N{\mathbb{N}} 
+\def\cN{{\mathcal N}}
+\def\cfN{{\mathscr N}}
+\def\fN{{\mathfrak N}}
+\def\cO{{\mathcal O}}
+\def\P{\mathbb{P}} 
+\def\PP{{\mathbb P}}
+\def\cP{{\mathcal P}}
+\def\cfP{{\mathscr P}}
+\def\fP{{\mathfrak P}}
+\def\Q{\mathbb{Q}} 
+\def\QQ{{\mathbb Q}}
+\def\cQ{{\mathcal Q}}
+\def\cQt{{\til\cQ}}
+\def\fQ{{\mathfrak Q}}
+\def\hR{{\hat R}}
+\def\R{\mathbb{R}} 
+\def\cfR{{\mathscr R}}
+\def\cR{{\mathcal R}}
+\def\fR{{\mathfrak R}}
+\def\cfS{{\mathscr S}}
+\def\cS{{\mathcal S}}
+\def\cSt{{\til\cS}}
+\def\fS{{\mathfrak S}}
+\def\cT{{\mathcal T}}
+\def\cV{{\mathcal V}}
+\def\fV{{\mathfrak V}}
+\def\cW{{\mathcal W}}
+\def\hx{{\hat x}}
+\def\hX{{\hat X}}
+\def\cX{{\mathcal X}}
+\def\Z{\mathbb{Z}}
+\def\fZ{{\mathfrak Z}}
+\def\fz{{\mathfrak z}}
+\def\vp{{v_\perp}}
+\def\vpt{{v_\perp^\top}}
+\def\vt{{v^\top}}
+\def\vb{{\bar v}}
+\def\vbp{{\vb_\perp}}
+\def\vbpt{{\vb_\perp^\top}}
+\def\vbt{{\vb^\top}}
+\def\vv{{v'}}
+\def\vvp{{\vv_\perp}}
+\def\vvpt{{\vv_\perp^\top}}
+\def\vvt{{\vv^\top}}
+\def\vvb{{\bar\vv}}
+\def\vvbp{{\vvb_\perp}}
+\def\vvbpt{{\vvb_\perp^\top}}
+\def\vvbt{{\vvb^\top}}
+\def\vvv{{v''}}
+\def\vvvp{{\vvv_\perp}}
+\def\vvvpt{{\vvv_\perp^\top}}
+\def\vvvt{{\vvv^\top}}
+\def\vvvb{{\bar\vvv}}
+\def\vvvbp{{\vvvb_\perp}}
+\def\vvvbpt{{\vvvb_\perp^\top}}
+\def\vvvbt{{\vvvb^\top}}
+\def\ww{{w'}}
+\def\www{{w''}}
+
+%%% roman
+%%MATHBB
+%\def\C{\mathbb{C}} 
+%\def\H{\mathbb{H}}
+%\def\N{\mathbb{N}} 
+%\def\P{\mathbb{P}} 
+%\def\R{\mathbb{R}} 
+%\def\Z{\mathbb{Z}} 
+%%MATHFRAK
+%\def\ff{{\mathfrak f}}
+%\def\gf{{\mathfrak g}}
+%\def\tf{{\mathfrak t}}
+%\def\hf{{\mathfrak h}}
+%\def\sf{{\mathfrak s}}
+%\def\uf{{\mathfrak u}}
+
+%%%
+\def\be{{\bf e}}
+\def\bm{{\bf m}}
+\def\bR{{\bf R}}
+\def\bd{{\bf d}}
+\def\bell{{\bf\ell}}
+\def\tj{{\til\jmath}}
+\def\tgf{{\til\gf}}
+\def\tM{{\til M}}
+\def\bM{{\bf M}}
+\def\tm{{\til m}}
+\def\tN{{\til N}}
+\def\bn{{\bf n}}
+\def\Qb{{\bar Q}}
+\def\tQ{{\til Q}}
+\def\tr{{\til r}}
+\def\br{{\bf r}}
+\def\tbr{{\til\br}}
+\def\hr{{\hat r}}
+\def\bs{{\bf s}}
+\def\tS{{\til S}}
+\def\bv{{\bf v}}
+\def\tX{{\til X}}
+\def\bz{{\boldsymbol{z}}}
+
+\def\bd{{\boldsymbol{d}}}
+\def\bl{{\boldsymbol{\ell}}}
+\def\bL{{\boldsymbol{L}}}
+\def\bm{{\boldsymbol{m}}}
+
+\def\tcW{{\til\cW}}
+%MATHCAL
+\def\cA{{\mathcal A}}
+\def\cB{{\mathcal B}}
+\def\cBh{{\hat\cB}}
+\def\cC{{\mathcal C}}
+\def\cCb{\overline\cC}
+\def\cD{{\mathcal D}}
+\def\cE{{\mathcal E}}
+\def\cG{{\mathcal G}}
+\def\cH{{\mathcal H}}
+\def\cI{{\mathcal I}}
+\def\cJ{{\mathcal J}}
+\def\cK{{\mathcal K}}
+\def\cM{{\mathcal M}}
+\def\cN{{\mathcal N}}
+\def\cO{{\mathcal O}}
+\def\cP{{\mathcal P}}
+\def\cR{{\mathcal R}}
+\def\cS{{\mathcal S}}
+\def\cV{{\mathcal V}}
+\def\cW{{\mathcal W}}
+\def\cX{{\mathcal X}}
+
+%% greek
+\def\a{{\alpha}}
+\def\ad{{\dot\a}}
+\def\ba{{\boldsymbol\a}}
+\def\b{{\beta}}
+\def\bb{{\boldsymbol\b}}
+\def\bd{{\dot\b}}
+\def\g{{\gamma}}
+\def\bg{{\boldsymbol\g}}
+\def\gd{{\dot\g}}
+\def\G{{\Gamma}}
+\def\d{{\delta}}
+\def\bde{{\boldsymbol\d}}
+\def\dd{{\dot\d}}
+\def\D{{\Delta}}
+\def\e{{\epsilon}}
+\def\ve{\varepsilon}
+\def\bla{{\boldsymbol\l}}
+\def\z{{\zeta}}
+\def\th{{\theta}}
+\def\k{{\kappa}}
+\def\l{{\lambda}}
+\def\bl{{\boldsymbol\l}}
+
+\def\bLa{{\boldsymbol\L}}
+\def\L{{\Lambda}}
+\def\m{{\mu}}
+\def\bmu{{\boldsymbol\m}}
+\def\n{{\nu}}
+\def\x{{\xi}}
+\def\r{{\rho}}
+\def\s{{\sigma}}
+\def\S{{\Sigma}}
+\def\t{{\tau}}
+\def\ch{{\chi}}
+\def\f{{\phi}}
+\def\vf{{\varphi}}
+\def\ps{{\psi}}
+\def\w{{\omega}}
+\def\bw{{\boldsymbol\w}}
+\def\bz{{\boldsymbol{z}}}
+\def\Om{{\Omega}}
+
+%%%%
+\def\ssqt{{\scriptscriptstyle\sqrt2}}
+\def\Chi{\raisebox{\depth}{$\chi$}}
+\def\cda{{\ \grey\bf\downarrow}}
+\def\cvl{{\quad\hspace{1.5pt}\blue\bf\shortmid}}
+\def\I{\mathbb{1}}
+%% colors
+\def\ccw{\cellcolor{white}}
+\def\grey#1{{\color{black!40}{#1}}}
+\def\blue#1{{\color{blue}{#1}}}
+\def\rcb{\rowcolor{blue!07}}
+\def\ccb{\cellcolor{blue!07}}
+\def\green#1{{\color{black!25!green}{#1}}}
+\def\rcg{\rowcolor{black!25!green!10}}
+\def\ccg{\cellcolor{black!25!green!10}}
+\def\yellow#1{{\color{black!25!yellow}{#1}}}
+\def\rcy{\rowcolor{black!25!yellow!10}}
+\def\ccy{\cellcolor{black!25!yellow!10}}
+\def\orange#1{{\color{black!25!orange}{#1}}}
+\def\rco{\rowcolor{black!25!orange!12}}
+\def\cco{\cellcolor{black!25!orange!12}}
+\def\red#1{{\color{red}{#1}}}
+\def\ccr{\cellcolor{red!15}}
+\def\rcr{\rowcolor{red!15}}
+
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\def\CUB{{\rm CUB}}
+\def\FCC{{\rm FCC}}
+\def\HEX{{\rm HEX}}
+
+\def\Qt{\tilde{Q}}
+\def\St{\tilde{S}}
+\def\hL{\hat{L}}
+\def\cZ{\mathcal{Z}}
+\def\hh{\hat{h}}
+
+%\usepackage{minitoc}
+ \setcounter{tocdepth}{2}
+
+%BIabliography things
+\usepackage[	style=numeric-comp,
+				backend=bibtex,
+				url=false,
+				sorting=nyt,
+				%eprint=false,
+				%isbn=false
+				]{biblatex}
+%\AtEveryBibitem{\clearfield{eprint}}
+\AtEveryBibitem{\clearfield{note}}
+\AtEveryBibitem{\clearfield{issn}}
+\AtEveryBibitem{\clearfield{url}}
+\AtEveryBibitem{\clearfield{urldate}}
+\AtEveryBibitem{\clearfield{journal}}
+%\AtEveryBibitem{\clearfield{journaltitle}}
+%makes titles in misc(s) upshape
+
+%Replace unpublished articles to "misc" type so journal doesn't get printed empty
+\DeclareFieldFormat[misc]{title}{\mkbibquote{#1}}
+
+%Problem with preprint not published, it wants to give it a journal ref.
+%if they are of type article put them in misc, solution and above to get tiles upright
+
+\addbibresource{}
+
+
+
+\begin{document}
+
+\section{What do we want to do?}
+Explain Beem - Rastelli as one of the posisble twists.
+Show how Donaldson-Witten twist and Beem-Rastelli twist are the same when viewd from conformal compactification, differnce is differnt choice of slicing of conformal embedding to give space-time picture.
+
+
+\section{SCA definitions}
+\label{sSCA}
+
+\paragraph{Spinor basis.}
+From the basis choices we have picked, Madalena's lectures, we extract the action of the bosonic generators on the fermions Q,S,Qt,St.
+
+%\begin{align}\label{4dSCAbb}
+%D \circ P_{\a\ad} &= + P_{\a\ad} , &
+%D \circ K^{\ad\a} &= - K^{\ad\a} , \nn\\
+%\cM_\a^{~\b} \circ \cM_{\g}^{\ph{\g}\d } &= + \d_\g^\b \cM_\a^{~\d } - \d_\a^\d \cM_\g^{~\b} , &
+%\cMt^\ad_{~\bd} \circ \cMt^\gd_{~\dd} &= - \d^\ad_\dd \cMt^\gd_{~\bd} + \d^\gd_\bd \cMt^\ad_{~\dd} , \nn\\
+%\cM_\a^{~\b} \circ P_{\g\gd}	&= + \d_\g^\b P_{\a\gd} - \tfrac12 \d_\a^\b P_{\g\gd} , &
+%\cMt^\ad_{~\bd} \circ P_{\g\gd} &= - \d^\ad_\gd P_{\g\bd}+\tfrac12\d ^\ad_{~\bd}P_{\g\gd} , \nn\\
+%\cM_\a^{~\b} \circ K^{\gd\g}	&= - \d_\a^\g K^{\gd\b} + \tfrac12 \d_\a^\b K^{\gd\g} , &
+%\cMt^\ad_{~\bd} \circ K^{\gd\g} &= + \d^\gd_\bd K^{\ad\g} - \tfrac12 \d^\ad_\bd K^{\gd\g} , \nn\\
+%K^{\ad\a} \circ P_{\b\bd}	&= + 4 \d_\b^\a\d^\ad_\bd D - 4\d_\b^\a \cMt^\ad_{~\bd} + 4\d^\ad_\bd\cM_\b^{~\a} ,\\
+%R^i_{~j} \circ R^k_{~l} &=  - \d^i_l R^k_{~j} + \d^k_j R^i_{~l} ,\nn
+%\end{align}
+\begin{align}\label{4dSCAbf}
+D \circ Q^i_{~\a}			&= + \tfrac12 Q^i_{~\a} , &
+D \circ \Qt_{i \ad}			&= + \tfrac12 \Qt_{i \ad} , \nn\\
+D \circ S_i^{~\a}			&= - \tfrac12  S_i^{~\a} , &
+D \circ \St^{i\ad} 			&= - \tfrac12 \St^{i\ad}  , \nn\\
+%
+\cM_\a^{~\b} \circ Q^i_{~\g}	&= + \d_\g^\b Q_\a^i - \tfrac12 \d_\a^\b Q_\g^i , &
+\cMt^\ad_{~\bd} \circ \Qt_{i \gd}&= - \d^\ad_\gd \Qt_{i \bd} + \tfrac12 \d^\ad_\bd \Qt_{i \gd} , \nn\\
+\cM_\a^{~\b} \circ S_i^{~\g}	&= - \d_\a^\g S_i^{~\b} + \tfrac12 \d_\a^\b S_i^{~\g} , &
+\cMt^\ad_{~\bd} \circ \St^{i\gd} &= + \d^\gd_\bd \St^{i\ad} - \tfrac12 \d^\ad_\bd \St^{i\gd} ,\\
+%
+R^i_{~j} \circ Q^k_{~\a}	&= + \d_j^k Q^i_{~\a} - \tfrac14 \d_j^i Q^k_{~\a} , &
+R^i_{~j} \circ \Qt_{k \ad}	&= - \d_k^i \Qt_{j\ad} + \tfrac14 \d_j^i \Qt_{k \ad} , \nn\\
+R^i_{~j} \circ S_k^{~\a}	&= - \d_k^i S_j^{~\a} + \tfrac14 \d_j^i S_k^{~\a} , &
+R^i_{~j} \circ \St^{k \ad}	&= + \d_j^k \St^{i\ad} - \tfrac14 \d_j^i \St^{k \ad} , \nn\\
+%
+K^{\ad\a} \circ Q^i_{~\b}	&= + 2 \d_\b^\a \St^{i\ad} , &
+K^{\ad\a} \circ \Qt_{i \bd}	&= + 2 \d_\bd^\ad S_i^{~\a} , \nn\\
+P_{\a\ad} \circ S_i^{~\b}	&= - 2 \d_\a^\b \Qt_{i \ad} , &
+P_{\a\ad} \circ \St^{i\bd} 	&= - 2 \d_\ad^\bd Q^i_{~\a} , \nn
+\end{align}
+\begin{align}\label{4dSCAff}
+Q^i_{~\a} \circ \Qt_{j\ad} &= + \tfrac12 \d^i_j P_{\a\ad} , &
+\St^{i\ad} \circ S_j^{~\a} 	&= + \tfrac12 \d^i_j K^{\ad\a} , \\
+Q^i_{~\a} \circ S_j^{~\b} 	&= + \tfrac12 \d^i_j \d_\a^{~\b} D + \d^i_{~j} \cM_\a^{~\b} - \d_\a^\b R^i_{~j} , &
+\St^{i\ad} \circ \Qt_{j\bd}	&= + \tfrac12 \d^i_j \d^\ad_\bd D - \d^i_{~j}  \cMt^\ad_{~\bd} + \d^\ad_\bd R^i_{~j} , \nn
+\end{align}
+where unlisted commutation relations vanish.
+
+\paragraph{Cartan basis.}  
+
+Introduce the basis for the Lorentz and R symmetry generators
+\begin{align}\label{cartan}
+r \ \ &\doteq  - 2 (R^1_{~1} + R^2_{~2})  , \nn\\
+R \ \ &\doteq  R^1_{~1} - R^2_{~2} , & 
+j \ \ &\doteq  2\cM_1^{~1} =-2 \cM_2^{~2}, &
+\tj \ \ &\doteq  -2\cMt^{\dot1}_{~\dot1} =2 \cMt^{\dot2}_{~\dot2}, \\
+R^+ &\doteq  R^1_{~2} , & j^+ &\doteq  \cM_1^{~2} , & \tj^- &\doteq  \cMt^{\dot1}_{~\dot2} , \nn\\
+R^- &\doteq  R^2_{~1} , & j^- &\doteq  \cM_2^{~1} , & \tj^+ &\doteq  \cMt^{\dot2}_{~\dot1} , \nn
+\end{align}
+These satisfy the $\su(2)$ algebra in the form $R^+\circ R^-=R$, $R\circ R^{\pm}=\pm 2 R^{\pm}$, and similarly for the $j$'s and $\tj$'s.  With this normalization the eigenvalues of $j$, $\tj$, and $R$ are integers.
+$\u(1)_r$ charges of the supercharges are $r(Q)=-r(\Qt)=-r(S)=r(\St)=-1$.  
+Label irreducible supermultiplets of operators as $[j;\tj]_D^{(R;r)}$ by their highest eigenvalues of the Cartan generators $D$, $j$, $\tj$, $R$, and $r$, which we denote by the same symbol as the corresponding generator.
+These normalizations agree with the conventions of \red{[CDI]}.
+
+There are three combinations of the five Cartan generators that will play a central role.
+They are
+\begin{align}\label{LLhZ}
+L_0 &\doteq  \tfrac12 D + \tfrac14 j + \tfrac14 \tj, \nn\\
+\hL_0 &\doteq  \tfrac12 D - \tfrac14 j - \tfrac14 \tj - \tfrac12 R, \nn\\
+Z &\doteq  \ph{\tfrac12 D} - \tfrac14 j + \tfrac14 \tj + \tfrac14 r .
+\end{align}
+These agree with the definitions of the corresponding operators in \red{[VOA,Lemos]} except for the normalization of $Z$:  $Z=2\cZ$ where $\cZ$ is the central charge of \red{[VOA,Lemos]}.
+We will generally use $\{L_0, \hL_0, Z, r, R\}$ as a basis of the Cartan generators, and denote their eigenvalues by $\{h, \hh, Z, r, R\}$.
+The operators we are interested in will have $r, R, 2h \in \N$ and will generally have $\hL_0=Z=0$.
+It is useful to note that
+\begin{align}\label{}
+D &= L_0 + \hL_0 + \tfrac12 R, &
+j + \tj &= 2 L_0 - 2 \hL_0 - R, &
+j - \tj &= r - 4 Z.\nn
+\end{align}
+Spinor and lightcone-complex basis diagonalize this Cartan.  Their eigenvalues are given below.
+
+At the algebra level, all of these compositions are simple commutators.
+How do we lift them to the action of the group element?
+
+
+\section{Action of conf on supercharges}
+The above bases choices give us the action of the algebra (of bnosonic generators) on the supercharges and superconformal charges.
+
+Define vectors of charges as:
+\begin{align}
+{\bf Q} &= \{ Q^1_1, Q^1_2, Q^2_1, Q^2_2,  \St^{1 \dot{1}},  \St^{1 \dot{2}},  \St^{2 \dot{1}},  \St^{2 \dot{2}}  \} \nn\\
+{\bf S} &= \{ \Qt_{1 \dot{1}}, \Qt_{1 \dot{2}},\Qt_{2 \dot{1}}, \Qt_{2 \dot{2}}, S^{1 1},S^{1 2},S^{2 1},S^{2 2}, \}  \nn
+\end{align}
+Now we can write the action of the algebra elements on these representations.
+\medskip
+\begin{itemize}
+\item can I consider the bracket [X,Q] as just X. Q (matrix multiplication)?
+how do I exponentiate to get the action of the group?
+\end{itemize}
+
+Let's start with the dilatation operator, that is the simplest, since it is diagonal:
+\begin{align}
+D = \begin{pmatrix}
+ \frac12&0&0&0&0&0&0&0 \\
+  0& \frac12&0&0&0&0&0&0 \\
+ 0&0& \frac12&0&0&0&0&0 \\
+ 0&0&0& \frac12&0&0&0&0 \\
+ 0&0&0&0&- \frac12&0&0&0 \\
+ 0&0&0&0&0&- \frac12&0&0 \\
+ 0&0&0&0&0&0&- \frac12&0 \\
+ 0&0&0&0&0&0&0&- \frac12
+\end{pmatrix}
+\end{align}
+acting equally on both representations.
+
+For the next, let's focus on the action on {\bf Q}.
+\begin{align}
+\cM_1^{\ 1} = \begin{pmatrix}
+ +\frac12&0&0&0&0&0&0&0 \\
+  0& -\frac12&0&0&0&0&0&0 \\
+ 0&0& +\frac12&0&0&0&0&0 \\
+ 0&0&0& -\frac12&0&0&0&0 \\
+  0&0&0&0&0&0&0&0 \\
+  0&0&0&0&0&0&0&0 \\
+  0&0&0&0&0&0&0&0 \\
+  0&0&0&0&0&0&0&0 
+\end{pmatrix}
+\end{align}
+\begin{align}
+\cM_1^{\ 2} = \begin{pmatrix}
+0&1&0&0&0&0&0&0 \\
+  0&0&0&0&0&0&0&0 \\
+ 0&0&0&1&0&0&0&0 \\
+  0&0&0&0&0&0&0&0 \\
+ 0&0&0&0&0&0&0&0 \\
+  0&0&0&0&0&0&0&0 \\
+ 0&0&0&0&0&0&0&0 \\
+ 0&0&0&0&0&0&0&0
+\end{pmatrix}
+\quad
+\cM_2^{\ 1} = \begin{pmatrix}
+0&0&0&0&0&0&0&0 \\
+1&0&0&0&0&0&0&0 \\
+0&0&0&0&0&0&0&0 \\
+ 0&0&1&0&0&0&0&0 \\
+ 0&0&0&0&0&0&0&0 \\
+  0&0&0&0&0&0&0&0 \\
+ 0&0&0&0&0&0&0&0 \\
+  0&0&0&0&0&0&0&0 
+  \end{pmatrix}
+\end{align}
+$$\cM_2^{\ 2} = - \cM_1^{\ 1} $$
+Now, $\cMt$ acts on the $\cSt$ as $\cM$ does on the $Q$s, so we have automaticallyu
+\begin{align}
+\cMt_1^{\ 1} = \begin{pmatrix}
+  0&0&0&0&0&0&0&0 \\
+  0&0&0&0&0&0&0&0 \\
+  0&0&0&0&0&0&0&0 \\
+  0&0&0&0&0&0&0&0 \\
+0&0&0&0& +\frac12&0&0&0 \\
+  0& 0&0&0&0&-\frac12&0&0 \\
+ 0&0&0&0&0&0& +\frac12&0 \\
+ 0&0&0&0&0&0&0& -\frac12
+ \end{pmatrix}
+\end{align}
+\begin{align}
+\cMt_1^{\ 2} = \begin{pmatrix}
+0&0&0&0&0&0&0&0 \\
+  0&0&0&0&0&0&0&0 \\
+ 0&0&0&0&0&0&0&0 \\
+  0&0&0&0&0&0&0&0 \\
+ 0&0&0&0&0&1&0&0 \\
+  0&0&0&0&0&0&0&0 \\
+ 0&0&0&0&0&0&0&1 \\
+ 0&0&0&0&0&0&0&0
+\end{pmatrix}
+\quad
+\cMt_2^{\ 1} = \begin{pmatrix}
+0&0&0&0&0&0&0&0 \\
+0&0&0&0&0&0&0&0 \\
+0&0&0&0&0&0&0&0 \\
+ 0&0&0&0&0&0&0&0 \\
+ 0&0&0&0&0&0&0&0 \\
+  0&0&0&0&1&0&0&0 \\
+ 0&0&0&0&0&0&0&0 \\
+  0&0&0&0&0&0&1&0 
+  \end{pmatrix}
+\end{align}
+$$\cMt_2^{\ 2} = - \cMt_1^{\ 1} $$
+The R-symmetry generators will behave similarly, the only difference is that what gets interchanged is the latin index $i$ for the R symmetry, rather than the greek index $\a$, indicating the spin of the generator.
+\begin{align}
+R_1^{\ 1} = \begin{pmatrix}
+  \frac34&0&0&0&0&0&0&0 \\
+  0&  \frac34&0&0&0&0&0&0 \\
+  0&0&-  \frac14&0&0&0&0&0 \\
+  0&0&0&-  \frac14&0&0&0&0 \\
+0&0&0&0& - \frac34&0&0&0 \\
+  0& 0&0&0&0& - \frac34&0&0 \\
+ 0&0&0&0&0&0&  \frac14&0 \\
+ 0&0&0&0&0&0&0&  \frac14
+ \end{pmatrix}
+ \quad
+ R^1_{\ 2} = \begin{pmatrix}
+0&0&1&0&0&0&0&0 \\
+0&0&0&1&0&0&0&0 \\
+0&0&0&0&0&0&0&0 \\
+0&0&0&0&0&0&0&0 \\
+0&0&0&0&0&0&-1&0 \\
+0&0&0&0&0&0&0&-1 \\
+0&0&0&0&0&0&0&0 \\
+0&0&0&0&0&0&0&0
+\end{pmatrix}
+\end{align}
+\begin{align}
+R^2_{\ 1} = \begin{pmatrix}
+0&0&0&0&0&0&0&0 \\
+0&0&0&0&0&0&0&0 \\
+1&0&0&0&0&0&0&0 \\
+0&1&0&0&0&0&0&0 \\
+0&0&0&0&0&0&0&0 \\
+0&0&0&0&0&0&0&0 \\
+0&0&0&0&-1&0&0&0 \\
+0&0&0&0&0&-1&0&0
+  \end{pmatrix}
+  \quad
+  R^2_{\ 2} = \begin{pmatrix}
+  -\frac14&0&0&0&0&0&0&0 \\
+  0& -\frac14&0&0&0&0&0&0 \\
+  0&0&\frac34&0&0&0&0&0 \\
+  0&0&0& \frac34&0&0&0&0 \\
+0&0&0&0& \frac14&0&0&0 \\
+  0& 0&0&0&0& \frac14&0&0 \\
+ 0&0&0&0&0&0& - \frac34&0 \\
+ 0&0&0&0&0&0&0& - \frac34
+  \end{pmatrix}
+\end{align}
+
+
+
+More interesting are the translations and superconformal transformations. These can intermix the $Q$s and $\St$, which was the reason to put them in a single vector that gets rotated under the action of the full conformal group.
+
+The action of the Ks and Ps on Qs and Ss is given as
+\begin{align}
+K^{\dot{1}1} = \begin{pmatrix}
+0&0&0&0&0&0&0&0 \\
+0&0&0&0&0&0&0&0 \\
+0&0&0&0&0&0&0&0 \\
+0&0&0&0&0&0&0&0 \\
+2&0&0&0&0&0&0&0 \\
+0&0&0&0&0&0&0&0 \\
+0&0&2&0&0&0&0&0 \\
+0&0&0&0&0&0&0&0
+\end{pmatrix}
+\quad
+K^{\dot{1}2} = \begin{pmatrix}
+0&0&0&0&0&0&0&0 \\
+0&0&0&0&0&0&0&0 \\
+0&0&0&0&0&0&0&0 \\
+0&0&0&0&0&0&0&0 \\
+0&2&0&0&0&0&0&0 \\
+0&0&0&0&0&0&0&0 \\
+0&0&0&2&0&0&0&0 \\
+0&0&0&0&0&0&0&0
+  \end{pmatrix}
+\end{align}
+\begin{align}
+K^{\dot{2}1} = \begin{pmatrix}
+0&0&0&0&0&0&0&0 \\
+0&0&0&0&0&0&0&0 \\
+0&0&0&0&0&0&0&0 \\
+0&0&0&0&0&0&0&0 \\
+0&0&0&0&0&0&0&0 \\
+2&0&0&0&0&0&0&0 \\
+0&0&0&0&0&0&0&0 \\
+0&0&2&0&0&0&0&0
+\end{pmatrix}
+\quad
+K^{\dot{2}2} = \begin{pmatrix}
+0&0&0&0&0&0&0&0 \\
+0&0&0&0&0&0&0&0 \\
+0&0&0&0&0&0&0&0 \\
+0&0&0&0&0&0&0&0 \\
+0&0&0&0&0&0&0&0 \\
+0&2&0&0&0&0&0&0 \\
+0&0&0&0&0&0&0&0 \\
+0&0&0&2&0&0&0&0
+  \end{pmatrix}
+\end{align}
+
+
+\subsection{Group elements}
+The exponentiation of these generators is fairly easy.
+First of all, each decomposes into blocks; these are made up of simple Pauli matrices, as a consequence of the fact that the algebra is a tensor product of $su(2)$s   .
+
+Thus, we can write
+\begin{align}
+e^D = \begin{pmatrix}
+ \sqrt{e}&0&0&0&0&0&0&0 \\
+  0& \sqrt{e}&0&0&0&0&0&0 \\
+ 0&0& \sqrt{e}&0&0&0&0&0 \\
+ 0&0&0& \sqrt{e}&0&0&0&0 \\
+ 0&0&0&0& \frac{1}{\sqrt{e}}&0&0&0 \\
+ 0&0&0&0&0& \frac{1}{\sqrt{e}}&0&0 \\
+ 0&0&0&0&0&0& \frac{1}{\sqrt{e}}&0 \\
+ 0&0&0&0&0&0&0& \frac{1}{\sqrt{e}}
+\end{pmatrix}
+\end{align}
+ and similar for $\cM_1^{\ 1}$ with obvious transpositions.
+ 
+Then,
+\begin{align}
+e^{ \cM_1^{\ 2} } = \begin{pmatrix}
+1&1&0&0&0&0&0&0 \\
+  0&1&0&0&0&0&0&0 \\
+ 0&0&1&1&0&0&0&0 \\
+  0&0&0&1&0&0&0&0 \\
+ 0&0&0&0&1&0&0&0 \\
+  0&0&0&0&0&1&0&0 \\
+ 0&0&0&0&0&0&1&0 \\
+ 0&0&0&0&0&0&0&1
+\end{pmatrix}
+\quad
+e^{\cM_2^{\ 1} } = \begin{pmatrix}
+1&0&0&0&0&0&0&0 \\
+1&1&0&0&0&0&0&0 \\
+0&0&1&0&0&0&0&0 \\
+ 0&0&1&1&0&0&0&0 \\
+ 0&0&0&0&1&0&0&0 \\
+  0&0&0&0&0&1&0&0 \\
+ 0&0&0&0&0&0&1&0 \\
+  0&0&0&0&0&0&0&1 
+  \end{pmatrix}
+\end{align}
+in this case because the raising and lowering blocks are nilpotent, so only the zeroth and first order term contribute in the expansion.
+
+\begin{align}
+e^{K^{\dot{1}1}} = \begin{pmatrix}
+1&0&0&0&0&0&0&0 \\
+0&1&0&0&0&0&0&0 \\
+0&0&1&0&0&0&0&0 \\
+0&0&0&1&0&0&0&0 \\
+2&0&0&0&1&0&0&0 \\
+0&0&0&0&0&1&0&0 \\
+0&0&2&0&0&0&1&0 \\
+0&0&0&0&0&0&0&1
+\end{pmatrix}
+\quad
+e^{K^{\dot{1}2} }= \begin{pmatrix}
+1&0&0&0&0&0&0&0 \\
+0&1&0&0&0&0&0&0 \\
+0&0&1&0&0&0&0&0 \\
+0&0&0&1&0&0&0&0 \\
+0&2&0&0&1&0&0&0 \\
+0&0&0&0&0&1&0&0 \\
+0&0&0&2&0&0&1&0 \\
+0&0&0&0&0&0&0&1
+  \end{pmatrix}
+\end{align}
+\begin{align}
+e^{K^{\dot{2}1} }= \begin{pmatrix}
+1&0&0&0&0&0&0&0 \\
+0&1&0&0&0&0&0&0 \\
+0&0&1&0&0&0&0&0 \\
+0&0&0&1&0&0&0&0 \\
+0&0&0&0&1&0&0&0 \\
+2&0&0&0&0&1&0&0 \\
+0&0&0&0&0&0&1&0 \\
+0&0&2&0&0&0&0&1
+\end{pmatrix}
+\quad
+e^{K^{\dot{2}2} }= \begin{pmatrix}
+1&0&0&0&0&0&0&0 \\
+0&1&0&0&0&0&0&0 \\
+0&0&1&0&0&0&0&0 \\
+0&0&0&1&0&0&0&0 \\
+0&0&0&0&1&0&0&0 \\
+0&2&0&0&0&1&0&0 \\
+0&0&0&0&0&0&1&0 \\
+0&0&0&2&0&0&0&1
+  \end{pmatrix}
+\end{align}
+
+ I was trying to build these to find the group action to send the Donaldson-Witetn charge
+ $$
+ Q^1_{\ 2} + Q^2_{\ 1}
+ $$
+ to the twisted Schur charge
+  $$
+ Q^1_{\ 2} +  \cSt^{2 \dot{2}}.
+ $$
+ Idea is that since those are the same rank we should be able to map between each other by some action of the conformal group / corresponding probably to a different slicing of the conformal compactification.
+ 
+ Anyway, besides finding this, now I am confused because if I take 
+ In the basis defined above ({\bf Q}), the DW charge is 
+ $$
+ \text{DW } = (0,1,1,0,0,0,0,0)
+ $$
+ and twisted Schur is
+  $$
+ \text{TS } = (0,1,0,0,0,0,0,1)
+ $$
+ So if the expression above for the generators are correct (I think so) and the action is the one I expect ({\bf probably error is here})
+ $Q' = e^g Q$, then we can map charges into one another.\\
+ However,
+ $$
+e^{ \cM_1^{\ 2} } DW = (1,1,1,0,0,0,0,0)
+ $$
+ which should not be a new class - rank (3,0) does not exist.
+ 
+ 
+ 
+\end{document}
+
